@@ -1,5 +1,5 @@
 MIPS_CPU.xpr
-tb_Fixed_Point_Datapath.wcfg
+tb_MIPS_CPU_behav.wcfg
 /MIPS_CPU.cache/
 /MIPS_CPU.hw/
 /MIPS_CPU.ip_user_files/
