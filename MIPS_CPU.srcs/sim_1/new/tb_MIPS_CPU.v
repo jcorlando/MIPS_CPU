@@ -11,6 +11,13 @@ reg [WL - 1 : 0] DMWD;                          // Data Memory
 // Outputs
 wire [WL - 1 : 0] DMRD;                         // Data Memory
 wire [WL - 1 : 0] instruction;                  // Instruction Memory
+wire [5 : 0] opcode = DUT.opcode;               // Control Unit
+wire [4 : 0] rs = DUT.rs;                       // Control Unit
+wire [4 : 0] rt = DUT.rt;                       // Control Unit
+wire [4 : 0] rd = DUT.rd;                       // Control Unit
+wire [15 : 0] Imm = DUT.Imm;                    // Control Unit
+wire [5 : 0] funct = DUT.funct;                 // Control Unit
+wire [25 : 0] Jaddr = DUT.Jaddr;                // Control Unit
 // Instantiate DUT
     top # ( .WL(WL), .MEM_Depth(MEM_Depth) )
             DUT( .CLK(CLK),                     // Clock

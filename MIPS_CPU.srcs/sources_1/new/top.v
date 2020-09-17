@@ -9,7 +9,18 @@ module top # (  parameter WL = 32, MEM_Depth = 64 )
     output [WL - 1 : 0] DMRD,           // Data Memory
     output [WL - 1 : 0] instruction     // Instruction Memory
 );
-    wire [WL - 1 : 0] pc_Out;           // Program Counter
+    wire [WL - 1 : 0] pc_Out;                       // Program Counter
+    wire [5 : 0] opcode = control_Unit.opcode;      // Control Unit
+    wire [4 : 0] rs = control_Unit.rs;              // Control Unit
+    wire [4 : 0] rt = control_Unit.rt;              // Control Unit
+    wire [4 : 0] rd = control_Unit.rd;              // Control Unit
+    wire [15 : 0] Imm = control_Unit.Imm;           // Control Unit
+    wire [5 : 0] funct = control_Unit.funct;        // Control Unit
+    wire [25 : 0] Jaddr = control_Unit.Jaddr;       // Control Unit
+    
+    control_Unit # ( .WL(WL) )
+        control_Unit( .instruction(instruction) );
+    
     
     data_Mem # ( .WL(WL), .MEM_Depth(MEM_Depth) )
         dataMemory( .CLK(CLK), .DMWE(DMWE), .DMA(DMA), .DMWD(DMWD), .DMRD(DMRD) );
