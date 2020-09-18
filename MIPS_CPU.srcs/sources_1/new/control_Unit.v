@@ -2,7 +2,10 @@
 
 module control_Unit # ( parameter WL = 32 )
 (
-    input [WL - 1 : 0] instruction
+    input [WL - 1 : 0] instruction,
+    output reg RFWE,
+    output reg [3 : 0] ALU_Control
+
 );
     wire [5 : 0] opcode = instruction[31 : 26];
     wire [4 : 0] rs = instruction[25 : 21];
@@ -11,5 +14,20 @@ module control_Unit # ( parameter WL = 32 )
     wire [15 : 0] Imm = instruction[15 : 0];
     wire [5 : 0] funct = instruction[5 : 0];
     wire [25 : 0] Jaddr = instruction[25 : 0];
+    wire [WL - 1 : 0] SImm = { {(WL - 16){Imm[15]}} ,Imm[15:0] };
+    
+    always @ (*)
+    begin
+        if(opcode == 35)
+        begin
+            RFWE <= 1;
+            ALU_Control <= 4'b0000;
+        end
+        else
+        begin
+            RFWE <= 0;
+            ALU_Control <= 4'b0000;
+        end
+    end
     
 endmodule
