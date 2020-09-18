@@ -12,11 +12,11 @@ module reg_File # (parameter WL = 32, MEM_Depth = 32)
     
     initial
     begin
-        RFRD1 <= 0;
-        RFRD2 <= 0;
+        $readmemh("my_Reg_Memory.mem", rf);
+        # 1
+        RFRD1 = rf[RFR1];
+        RFRD2 = rf[RFR2];
     end
-    
-    initial $readmemh("my_Reg_Memory.mem", rf);
     
     always @ (posedge CLK)
     begin

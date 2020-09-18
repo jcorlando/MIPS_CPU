@@ -22,14 +22,15 @@ module top # (  parameter WL = 32, MEM_Depth = 32 )
     wire [WL - 1 : 0] DMWD;                                     // Data Memory
     wire [WL - 1 : 0] DMRD;                                     // Data Memory
     
-    control_Unit # ( .WL(WL) )                                                              // Control Unit
-        control_Unit( .instruction(instruction) );                                          // Control Unit
     
     pc # ( .WL(WL) )                                                                        // Program Counter
         programCounter( .CLK(CLK), .pc_In(pc_Out), .pc_Out(pc_Out) );                       // Program Counter
     
     inst_Mem # ( .WL(WL), .MEM_Depth(MEM_Depth) )                                           // Instruction Memory
         instMemory( .addr(pc_Out), .instruction(instruction) );                             // Instruction Memory
+        
+    control_Unit # ( .WL(WL) )                                                              // Control Unit
+        control_Unit( .instruction(instruction) );                                          // Control Unit
     
     reg_File # ( .WL(WL), .MEM_Depth(MEM_Depth) )                                           // Register File
         registerFile( .CLK(CLK), .RFR1(rs), .RFR2(rt), .RFWD(DMRD),                         // Register File

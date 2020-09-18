@@ -19,9 +19,8 @@ wire [WL - 1 : 0] instruction = DUT.instruction;    // Instruction Memory
 wire [WL - 1 : 0] RFRD1 = DUT.RFRD1;                // Register File
 wire [WL - 1 : 0] RFRD2 = DUT.RFRD2;                // Register File
 wire signed [WL - 1 : 0] ALU_Out = DUT.ALU_Out;     // ALU
-
 wire DMWE = DUT.DMWE;                               // Data Memory
-wire [WL - 1 : 0] DMA = DUT.DMA;                    // Data Memory
+wire [WL - 1 : 0] DMA = DUT.dataMemory.DMA;         // Data Memory
 wire [WL - 1 : 0] DMWD = DUT.DMWD;                  // Data Memory
 wire [WL - 1 : 0] DMRD = DUT.DMRD;                  // Data Memory
 // Instantiate DUT
