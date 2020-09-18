@@ -4,6 +4,7 @@ module control_Unit # ( parameter WL = 32 )
 (
     input [WL - 1 : 0] instruction,
     output reg RFWE,
+    output reg DMWE,
     output reg [3 : 0] ALU_Control
 
 );
@@ -18,16 +19,20 @@ module control_Unit # ( parameter WL = 32 )
     
     always @ (*)
     begin
-        if(opcode == 35)
-        begin
-            RFWE <= 1;
-            ALU_Control <= 4'b0000;
-        end
-        else
-        begin
-            RFWE <= 0;
-            ALU_Control <= 4'b0000;
-        end
+        case(opcode)
+            35:
+            begin
+                ALU_Control <= 4'b0000;
+                RFWE <= 1;
+                DMWE <= 0;
+            end
+            default:
+            begin
+                ALU_Control <= 4'b0000;
+                RFWE <= 0;
+                DMWE <= 0;
+            end
+        endcase
     end
     
 endmodule

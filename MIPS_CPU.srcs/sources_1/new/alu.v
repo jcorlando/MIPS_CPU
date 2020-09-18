@@ -3,7 +3,7 @@
 module alu # ( parameter WL = 32 )
 (
     input signed [WL - 1 : 0] A, B,
-    input signed [3 : 0] ALU_Control,
+    input [3 : 0] ALU_Control,
     output reg signed [WL - 1 : 0] ALU_Out,
     output reg OVF
 );
