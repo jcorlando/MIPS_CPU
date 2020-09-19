@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module inst_Mem # ( parameter WL = 32, MEM_Depth = 64 )
+module inst_Mem # ( parameter WL = 32, MEM_Depth = 512 )
 (
     input [WL - 1 : 0] addr,
     output wire [WL - 1 : 0] instruction

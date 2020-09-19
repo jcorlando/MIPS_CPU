@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module data_Mem # ( parameter WL = 32, MEM_Depth = 64 )
+module data_Mem # ( parameter WL = 32, MEM_Depth = 512 )
 (
     input CLK, DMWE,
     input signed [WL - 1 : 0] DMA,

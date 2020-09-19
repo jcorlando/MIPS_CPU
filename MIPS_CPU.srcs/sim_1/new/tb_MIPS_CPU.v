@@ -2,7 +2,7 @@
 
 module tb_MIPS_CPU;
 // Parameters
-parameter WL = 32, MEM_Depth = 64;
+parameter WL = 32, MEM_Depth = 512;
 //Inputs
 reg CLK;                                                            // Clock
 // Outputs
@@ -15,7 +15,7 @@ wire [4 : 0] rd = DUT.rd;                                           // Control U
 wire [15 : 0] Imm = DUT.Imm;                                        // Control Unit
 wire [5 : 0] funct = DUT.funct;                                     // Control Unit
 wire [25 : 0] Jaddr = DUT.Jaddr;                                    // Control Unit
-wire [WL - 1 : 0] SImm = DUT.SImm;                                  // Control Unit
+wire signed [WL - 1 : 0] SImm = DUT.SImm;                           // Control Unit
 wire [WL - 1 : 0] RFRD1 = DUT.RFRD1;                                // Register File
 wire [WL - 1 : 0] RFRD2 = DUT.RFRD2;                                // Register File
 wire [4 : 0] RFR1 = DUT.RFR1;                                       // Register File
@@ -30,7 +30,7 @@ wire [WL - 1 : 0] ram[0 : MEM_Depth - 1] = DUT.dataMemory.ram;      // Data Memo
 // Instantiate DUT
     top # ( .WL(WL), .MEM_Depth(MEM_Depth) ) DUT( .CLK(CLK) );  // Clock
 // Clock generation
-always #40 CLK <= ~CLK;
+always #100 CLK <= ~CLK;
     initial
     begin
         CLK <= 0;                                   // Clock

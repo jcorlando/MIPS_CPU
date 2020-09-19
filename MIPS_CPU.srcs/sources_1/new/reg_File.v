@@ -10,7 +10,7 @@ module reg_File # (parameter WL = 32)
 );
     reg [WL - 1 : 0] rf[0 : 31];
     
-    initial $readmemh("my_Reg_Memory.mem", rf);     // Initialize Register File
+    initial $readmemh("my_Reg_Memory.mem", rf);       // Initialize Register File
     assign RFRD1 = rf[RFR1];                          // Read First Mode
     assign RFRD2 = rf[RFR2];                          // Read First Mode
     
