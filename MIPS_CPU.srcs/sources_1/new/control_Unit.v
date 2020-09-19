@@ -20,18 +20,28 @@ module control_Unit # ( parameter WL = 32 )
     always @ (*)
     begin
         case(opcode)
+            
             35:
             begin
                 ALU_Control <= 4'b0000;
                 RFWE <= 1;
                 DMWE <= 0;
             end
+            
+            43:
+            begin
+                ALU_Control <= 4'b0000;
+                RFWE <= 0;
+                DMWE <= 1;
+            end
+            
             default:
             begin
                 ALU_Control <= 4'b0000;
                 RFWE <= 0;
                 DMWE <= 0;
             end
+            
         endcase
     end
     
