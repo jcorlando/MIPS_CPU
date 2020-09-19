@@ -21,11 +21,6 @@ wire [WL - 1 : 0] RFRD2 = DUT.RFRD2;                                // Register 
 wire [4 : 0] RFR1 = DUT.RFR1;                                       // Register File
 wire [4 : 0] RFR2 = DUT.RFR2;                                       // Register File
 wire [WL - 1 : 0] rf[0 : 31] = DUT.registerFile.rf;                 // Register File
-wire [WL - 1 : 0] reg_t0 = DUT.registerFile.rf[8];                  // Register File register t0
-wire [WL - 1 : 0] reg_t1 = DUT.registerFile.rf[9];                  // Register File register t1
-wire [WL - 1 : 0] reg_t2 = DUT.registerFile.rf[10];                 // Register File register t2
-wire [WL - 1 : 0] reg_t3 = DUT.registerFile.rf[11];                 // Register File register t3
-wire [WL - 1 : 0] reg_t4 = DUT.registerFile.rf[12];                 // Register File register t4
 wire signed [WL - 1 : 0] ALU_Out = DUT.ALU_Out;                     // ALU
 wire DMWE = DUT.DMWE;                                               // Data Memory
 wire signed [WL - 1 : 0] DMA = DUT.dataMemory.DMA;                  // Data Memory
@@ -35,7 +30,7 @@ wire [WL - 1 : 0] ram[0 : MEM_Depth - 1] = DUT.dataMemory.ram;      // Data Memo
 // Instantiate DUT
     top # ( .WL(WL), .MEM_Depth(MEM_Depth) ) DUT( .CLK(CLK) );  // Clock
 // Clock generation
-always #50 CLK <= ~CLK;
+always #40 CLK <= ~CLK;
     initial
     begin
         CLK <= 0;                                   // Clock
