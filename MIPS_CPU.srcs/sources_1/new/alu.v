@@ -5,6 +5,7 @@ module alu # ( parameter WL = 32 )
     input signed [WL - 1 : 0] A, B,
     input [4 : 0] shamt,
     input [3 : 0] ALU_Control,
+    output reg zero,
     output reg signed [WL - 1 : 0] ALU_Out,
     output reg OVF
 );
@@ -33,10 +34,12 @@ module alu # ( parameter WL = 32 )
            ALU_Out <= ~(A ^ B);
           default: ALU_Out <= A + B;
         endcase
+        if(ALU_Out == 0) zero <= 1;     // Zero Flag
+        else zero <= 0;                 // Zero Flag
     end
     
-    always @ (*)
-    case (ALU_Control)
+    always @ (*)                     // Check for overflow
+    case (ALU_Control)               // Check for overflow
         4'b0000: OVF <= ( A[WL - 1] & B[WL - 1] & ~ALU_Out[WL - 1] ) | ( ~A[WL - 1] & ~B[WL - 1] & ALU_Out[WL - 1] );
         4'b0001: OVF <= ( ~A[WL - 1] & B[WL - 1] & ALU_Out[WL - 1] ) | ( A[WL - 1] & ~B[WL - 1] & ~ALU_Out[WL - 1] );
         default: OVF <= 1'b0;

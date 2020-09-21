@@ -6,12 +6,10 @@ module pc # (  parameter WL = 32 )
     input [WL - 1 : 0] pc_In,
     output reg [WL - 1 : 0] pc_Out
 );
-    wire [WL - 1 : 0] pc = 0;
+    wire [WL - 1 : 0] pc;
     assign pc = pc_In;
-    assign pc_In = pc_Out;
     
     initial pc_Out <= 0;
-    
-    always @ (posedge CLK) pc_Out <= pc_Out + 1;
+    always @ (posedge CLK) pc_Out <= pc_In;
     
 endmodule

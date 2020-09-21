@@ -8,6 +8,8 @@ module control_Unit # ( parameter WL = 32 )
     output reg ALUSrc,
     output reg MemtoReg,
     output reg RegDst,
+    output reg Branch,
+    output reg Jump,
     output reg [3 : 0] ALU_Control
 );
     wire [5 : 0] opcode = instruction[31 : 26];
@@ -23,7 +25,7 @@ module control_Unit # ( parameter WL = 32 )
     always @ (*)
     begin
         case(opcode)
-            35:     //  LW
+            35:     //  LW  I-Type
             begin
                 ALU_Control <= 4'b0000;
                 RFWE <= 1;
@@ -31,9 +33,11 @@ module control_Unit # ( parameter WL = 32 )
                 ALUSrc <= 1;
                 MemtoReg <= 1;
                 RegDst <= 0;
+                Branch <= 0;
+                Jump <= 0;
             end
             
-            43:     //  SW
+            43:     //  SW  I-Type
             begin
                 ALU_Control <= 4'b0000;
                 RFWE <= 0;
@@ -41,6 +45,8 @@ module control_Unit # ( parameter WL = 32 )
                 ALUSrc <= 1;
                 MemtoReg <= 1;
                 RegDst <= 0;
+                Branch <= 0;
+                Jump <= 0;
             end
             
        //////////////////Begin R-Type Instruction//////////////////////////////////////////////////
@@ -54,6 +60,8 @@ module control_Unit # ( parameter WL = 32 )
                         ALUSrc <= 0;
                         MemtoReg <= 0;
                         RegDst <= 1;
+                        Branch <= 0;
+                        Jump <= 0;
                     end
                     
                     34:     //  SUB
@@ -64,6 +72,8 @@ module control_Unit # ( parameter WL = 32 )
                         ALUSrc <= 0;
                         MemtoReg <= 0;
                         RegDst <= 1;
+                        Branch <= 0;
+                        Jump <= 0;
                     end
                     
                     4:     //  SLLV
@@ -74,6 +84,8 @@ module control_Unit # ( parameter WL = 32 )
                         ALUSrc <= 0;
                         MemtoReg <= 0;
                         RegDst <= 1;
+                        Branch <= 0;
+                        Jump <= 0;
                     end
                     
                     7:     //  SRAV
@@ -84,9 +96,11 @@ module control_Unit # ( parameter WL = 32 )
                         ALUSrc <= 0;
                         MemtoReg <= 0;
                         RegDst <= 1;
+                        Branch <= 0;
+                        Jump <= 0;
                     end
                     
-                    0:     //  SLL
+                    0:     //  SLL 
                     begin
                         ALU_Control <= 4'b0010;
                         RFWE <= 1;
@@ -94,11 +108,13 @@ module control_Unit # ( parameter WL = 32 )
                         ALUSrc <= 0;
                         MemtoReg <= 0;
                         RegDst <= 1;
+                        Branch <= 0;
+                        Jump <= 0;
                     end
                 endcase
       ///////////////////////End R-type Instruction///////////////////////////////////////
             
-            8:    // ADDI
+            8:    // ADDI  I-Type
             begin
                 ALU_Control <= 4'b0000;
                 RFWE <= 1;
@@ -106,6 +122,32 @@ module control_Unit # ( parameter WL = 32 )
                 ALUSrc <= 1;
                 MemtoReg <= 0;
                 RegDst <= 0;
+                Branch <= 0;
+                Jump <= 0;
+            end
+            
+            4:    // BEQ  I-Type
+            begin
+                ALU_Control <= 4'b0001;
+                RFWE <= 0;
+                DMWE <= 0;
+                ALUSrc <= 0;
+                MemtoReg <= 1;
+                RegDst <= 0;
+                Branch <= 1;
+                Jump <= 0;
+            end
+            
+            2:    // Jump  J-Type
+            begin
+                ALU_Control <= 4'b0000;
+                RFWE <= 0;
+                DMWE <= 0;
+                ALUSrc <= 1;
+                MemtoReg <= 1;
+                RegDst <= 0;
+                Branch <= 0;
+                Jump <= 1;
             end
             
             default:    // Default
@@ -115,7 +157,9 @@ module control_Unit # ( parameter WL = 32 )
                 DMWE <= 0;
                 ALUSrc <= 1;
                 MemtoReg <= 1;
-                
+                RegDst <= 0;
+                Branch <= 0;
+                Jump <= 0;
             end
             
         endcase
